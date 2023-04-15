@@ -19,6 +19,7 @@ import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
 
+import Card from './components/card';
 /* Theme variables */
 import './theme/variables.css';
 
@@ -29,7 +30,7 @@ const App: React.FC = () => (
     <IonReactRouter>
       <IonRouterOutlet>
         <Route exact path="/home">
-          <Home />
+          <Card />
         </Route>
         <Route exact path="/">
           <Redirect to="/home" />
