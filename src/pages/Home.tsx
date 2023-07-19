@@ -9,7 +9,7 @@ const Home: React.FC = () => {
           <IonTitle>AAA Budget track</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
+      <IonContent>
         <IonHeader collapse="condense">
           <IonToolbar>
             <IonTitle size="large">AAA Budget track</IonTitle>
