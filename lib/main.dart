@@ -1,3 +1,5 @@
+import 'package:allassabudget/Homepage/homepage.dart';
+import 'package:allassabudget/app_theme.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,10 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Allassa Budget',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      theme: appTheme,
       home: const MyHomePage(title: 'Allassa Budget'),
     );
   }
@@ -29,6 +28,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  int _currentIndex = 2;
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +38,20 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: const Center(
-        child: Placeholder(),
+        child: HomePage()
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: (int selectedIndex) => setState(() => _currentIndex = selectedIndex),
+        selectedItemColor: Theme.of(context).primaryColor,
+        unselectedItemColor: Theme.of(context).unselectedWidgetColor,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(icon: Icon(Icons.restart_alt), label: 'Recurring expenses'),
+          BottomNavigationBarItem(icon: Icon(Icons.add), label: 'Add expense'),
+          BottomNavigationBarItem(icon: Icon(Icons.timeline), label: ''),
+          BottomNavigationBarItem(icon: Icon(Icons.stop_circle), label: 'Budget cap'),
+          BottomNavigationBarItem(icon: Icon(Icons.category), label: 'Categories'),
+        ]),
     );
   }
 }
