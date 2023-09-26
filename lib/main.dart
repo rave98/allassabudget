@@ -1,9 +1,14 @@
+import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
 import 'package:allassabudget/Homepage/homepage.dart';
 import 'package:allassabudget/app_theme.dart';
 import 'package:allassabudget/logger.dart';
 
 void main() async {
   logger.info('Initializing Hive for storage');
+  await Hive.initFlutter();
+
   runApp(const MyApp());
 }
 
