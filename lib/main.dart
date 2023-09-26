@@ -1,8 +1,9 @@
 import 'package:allassabudget/Homepage/homepage.dart';
 import 'package:allassabudget/app_theme.dart';
-import 'package:flutter/material.dart';
+import 'package:allassabudget/logger.dart';
 
-void main() {
+void main() async {
+  logger.info('Initializing Hive for storage');
   runApp(const MyApp());
 }
 
@@ -32,6 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    logger.info("Building homepage");
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
