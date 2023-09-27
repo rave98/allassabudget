@@ -11,6 +11,8 @@ class Expense {
   final DateTime timeStamp;
 
   /// list of categories this expense fall in
+  /// this could be a list of Categories instead of Strings, but since they are only String wrappers for now 
+  /// I will leave it like this
   final List<String> categories;
 
   /// flag for recurring expenses. This is set by the user, and does not depends on dates
