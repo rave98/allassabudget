@@ -1,0 +1,23 @@
+name: Test, Build & Publish Release APK
+
+on:
+  push:
+    branches: 
+      - release
+
+jobs:
+  test:
+    name: Testing the app
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.13.0'
+          channel: 'any'
+      - run: flutter test
+  build_apk:
+    name: Build the APK of the app
+    needs: test
+    steps:
+      - uses: actions/checkout@v3
+      - run: echo 'TODO'
