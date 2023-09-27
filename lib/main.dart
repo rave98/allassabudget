@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:isar/isar.dart';
+import 'package:logging/logging.dart';
 
 import 'package:allassabudget/Storage/Models/expense.dart';
 import 'package:allassabudget/Homepage/homepage.dart';
@@ -9,6 +10,12 @@ import 'package:allassabudget/logger.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
+  /// Logger settings
+  Logger.root.level = Level.ALL;
+  Logger.root.onRecord.listen((record) {
+    debugPrint("${record.time.hour}:${record.time.minute}:${record.time.second},${record.time.millisecond} [${record.level}] ${record.message}");
+  });
 
   logger.info('Connecting to Isar');
   final dir = await getApplicationDocumentsDirectory();
