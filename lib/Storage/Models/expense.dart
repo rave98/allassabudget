@@ -13,8 +13,11 @@ class Expense {
   /// list of categories this expense fall in
   final List<String> categories;
 
+  /// flag for recurring expenses. This is set by the user, and does not depends on dates
+  final bool isRecurring;
+
   /// amount in cents
   final int amount;
 
-  Expense({required this.timeStamp, required this.categories, required this.amount});
+  Expense({required this.timeStamp, required this.categories, required this.isRecurring, required this.amount});
 }

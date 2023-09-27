@@ -27,8 +27,13 @@ const ExpenseSchema = CollectionSchema(
       name: r'categories',
       type: IsarType.stringList,
     ),
-    r'timeStamp': PropertySchema(
+    r'isRecurring': PropertySchema(
       id: 2,
+      name: r'isRecurring',
+      type: IsarType.bool,
+    ),
+    r'timeStamp': PropertySchema(
+      id: 3,
       name: r'timeStamp',
       type: IsarType.dateTime,
     )
@@ -71,7 +76,8 @@ void _expenseSerialize(
 ) {
   writer.writeLong(offsets[0], object.amount);
   writer.writeStringList(offsets[1], object.categories);
-  writer.writeDateTime(offsets[2], object.timeStamp);
+  writer.writeBool(offsets[2], object.isRecurring);
+  writer.writeDateTime(offsets[3], object.timeStamp);
 }
 
 Expense _expenseDeserialize(
@@ -83,7 +89,8 @@ Expense _expenseDeserialize(
   final object = Expense(
     amount: reader.readLong(offsets[0]),
     categories: reader.readStringList(offsets[1]) ?? [],
-    timeStamp: reader.readDateTime(offsets[2]),
+    isRecurring: reader.readBool(offsets[2]),
+    timeStamp: reader.readDateTime(offsets[3]),
   );
   object.id = id;
   return object;
@@ -101,6 +108,8 @@ P _expenseDeserializeProp<P>(
     case 1:
       return (reader.readStringList(offset) ?? []) as P;
     case 2:
+      return (reader.readBool(offset)) as P;
+    case 3:
       return (reader.readDateTime(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -523,6 +532,16 @@ extension ExpenseQueryFilter
     });
   }
 
+  QueryBuilder<Expense, Expense, QAfterFilterCondition> isRecurringEqualTo(
+      bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'isRecurring',
+        value: value,
+      ));
+    });
+  }
+
   QueryBuilder<Expense, Expense, QAfterFilterCondition> timeStampEqualTo(
       DateTime value) {
     return QueryBuilder.apply(this, (query) {
@@ -596,6 +615,18 @@ extension ExpenseQuerySortBy on QueryBuilder<Expense, Expense, QSortBy> {
     });
   }
 
+  QueryBuilder<Expense, Expense, QAfterSortBy> sortByIsRecurring() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isRecurring', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Expense, Expense, QAfterSortBy> sortByIsRecurringDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isRecurring', Sort.desc);
+    });
+  }
+
   QueryBuilder<Expense, Expense, QAfterSortBy> sortByTimeStamp() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'timeStamp', Sort.asc);
@@ -635,6 +666,18 @@ extension ExpenseQuerySortThenBy
     });
   }
 
+  QueryBuilder<Expense, Expense, QAfterSortBy> thenByIsRecurring() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isRecurring', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Expense, Expense, QAfterSortBy> thenByIsRecurringDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isRecurring', Sort.desc);
+    });
+  }
+
   QueryBuilder<Expense, Expense, QAfterSortBy> thenByTimeStamp() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'timeStamp', Sort.asc);
@@ -662,6 +705,12 @@ extension ExpenseQueryWhereDistinct
     });
   }
 
+  QueryBuilder<Expense, Expense, QDistinct> distinctByIsRecurring() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'isRecurring');
+    });
+  }
+
   QueryBuilder<Expense, Expense, QDistinct> distinctByTimeStamp() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'timeStamp');
@@ -686,6 +735,12 @@ extension ExpenseQueryProperty
   QueryBuilder<Expense, List<String>, QQueryOperations> categoriesProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'categories');
+    });
+  }
+
+  QueryBuilder<Expense, bool, QQueryOperations> isRecurringProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'isRecurring');
     });
   }
 
