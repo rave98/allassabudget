@@ -1,5 +1,5 @@
 name: allassabudget
-description: A new Flutter project.
+description: Flutter project for AAABudget microbudgeting app
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -31,9 +31,10 @@ dependencies:
   flutter:
     sdk: flutter
 
-  hive: ^2.2.3
-  hive_flutter: ^1.1.0
+  isar: ^3.1.0+1
+  isar_flutter_libs: ^3.1.0+1
   logging: ^1.2.0
+  path_provider: ^2.1.1
   pie_chart: ^5.3.2
 
 dev_dependencies:
@@ -47,6 +48,8 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
   test: ^1.24.3
+  isar_generator: ^3.1.0+1
+  build_runner: ^2.4.6
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
