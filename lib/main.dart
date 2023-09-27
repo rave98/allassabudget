@@ -1,10 +1,14 @@
+import 'package:allassabudget/Pages/AddExpenseManually/add_expense_manually.dart';
+import 'package:allassabudget/Pages/BudgetCap/budget_cap.dart';
+import 'package:allassabudget/Pages/Categories/categories.dart';
+import 'package:allassabudget/Pages/RecurringExpenses/recurring_expenses.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:isar/isar.dart';
 import 'package:logging/logging.dart';
 
 import 'package:allassabudget/Storage/Models/expense.dart';
-import 'package:allassabudget/Homepage/homepage.dart';
+import 'package:allassabudget/Pages/Homepage/homepage.dart';
 import 'package:allassabudget/app_theme.dart';
 import 'package:allassabudget/logger.dart';
 
@@ -50,6 +54,14 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _currentIndex = 2;
 
+  final List<Widget> _pages = [
+    RecurringExpenses(),
+    AddExpenseManually(),
+    HomePage(),
+    BudgetCap(),
+    Categories()
+  ];
+
   @override
   Widget build(BuildContext context) {
     logger.info("Building homepage");
@@ -58,9 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: const Center(
-        child: HomePage()
-      ),
+      body: _pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (int selectedIndex) => setState(() => _currentIndex = selectedIndex),
