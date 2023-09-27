@@ -1,13 +1,10 @@
+import 'package:flutter/material.dart';
+
+import 'package:allassabudget/Storage/storage.dart';
 import 'package:allassabudget/Pages/AddExpenseManually/add_expense_manually.dart';
 import 'package:allassabudget/Pages/BudgetCap/budget_cap.dart';
 import 'package:allassabudget/Pages/Categories/categories.dart';
 import 'package:allassabudget/Pages/RecurringExpenses/recurring_expenses.dart';
-import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:isar/isar.dart';
-import 'package:logging/logging.dart';
-
-import 'package:allassabudget/Storage/Models/expense.dart';
 import 'package:allassabudget/Pages/Homepage/homepage.dart';
 import 'package:allassabudget/app_theme.dart';
 import 'package:allassabudget/logger.dart';
@@ -15,18 +12,9 @@ import 'package:allassabudget/logger.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
-  /// Logger settings
-  Logger.root.level = Level.ALL;
-  Logger.root.onRecord.listen((record) {
-    debugPrint("${record.time.hour}:${record.time.minute}:${record.time.second},${record.time.millisecond} [${record.level}] ${record.message}");
-  });
-
-  logger.info('Connecting to Isar');
-  final dir = await getApplicationDocumentsDirectory();
-  final isar = await Isar.open(
-    [ExpenseSchema],
-    directory: dir.path
-  );
+  setupLogger();
+  Storage.setupLocalStorage();
+  
   runApp(const MyApp());
 }
 
@@ -36,9 +24,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Allassa Budget',
+      title: 'AAA Budget',
       theme: appTheme,
-      home: const MyHomePage(title: 'Allassa Budget'),
+      home: const MyHomePage(title: 'AAA Budget'),
     );
   }
 }
