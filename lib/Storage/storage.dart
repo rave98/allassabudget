@@ -15,4 +15,12 @@ class Storage {
       directory: dir.path
     );
   }
+
+  static Future<void> addCategory(Category category) async {
+    await localStorage!.writeTxn(() async => localStorage!.categorys.put(category));
+  }
+
+  static Future<void> addExpense(Expense expense) async {
+    await localStorage!.writeTxn(() async => localStorage!.expenses.put(expense));
+  }
 }
