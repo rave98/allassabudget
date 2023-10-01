@@ -4,7 +4,6 @@ import 'package:allassabudget/Storage/storage.dart';
 import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
 
-
 class CategoriesGrid extends StatelessWidget {
   CategoriesGrid({super.key});
 
