@@ -33,15 +33,11 @@ class _CategoriesGridSelectableState extends State<CategoriesGridSelectable> {
           width: 50,
           height: 50,
           decoration: BoxDecoration(
-            border: widget.controller.categoriesList.map((e) => e.name).contains(categoryName) ? 
-              Border.all(
-                color: associatedColor(categoryName).withOpacity(0.5),
-                width: 50
-              ) : 
-              null,
             shape: BoxShape.circle,
             color: associatedColor(categoryName)
           ),
+          child: widget.controller.categoriesList.map((e) => e.name).contains(categoryName) ?
+            Icon(Icons.check, color: Colors.white,) : null,
         ),
         Text(categoryName)
       ],
@@ -64,8 +60,9 @@ class _CategoriesGridSelectableState extends State<CategoriesGridSelectable> {
                   child: createCategoryIcon(category.name),
                   onTap: () {
                     logger.info("Selecting ${category.name}");
-                    widget.controller.addCategory(category);
-                    setState(() {});
+                    setState(() {
+                      widget.controller.addCategory(category);
+                    });
                   },
                 )).toList(),) :
             const Center(child: Text("No categories found"),);
