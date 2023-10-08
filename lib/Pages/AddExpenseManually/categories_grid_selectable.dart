@@ -2,10 +2,9 @@ import 'package:allassabudget/Pages/AddExpenseManually/categories_selecting_cont
 import 'package:allassabudget/Storage/Models/category.dart';
 import 'package:allassabudget/Storage/storage.dart';
 import 'package:allassabudget/logger.dart';
+import 'package:allassabudget/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
-
-import 'dart:math';
 
 class CategoriesGridSelectable extends StatefulWidget {
   CategoiesSelectingController controller;
@@ -19,10 +18,6 @@ class CategoriesGridSelectable extends StatefulWidget {
 class _CategoriesGridSelectableState extends State<CategoriesGridSelectable> {
 
   _CategoriesGridSelectableState();
-
-  Color associatedColor(String name) {
-    return Colors.primaries[Random(name.hashCode).nextInt(Colors.primaries.length)];
-  }
 
   Widget createCategoryIcon(String categoryName) {
     return Column(

@@ -1,5 +1,4 @@
-import 'dart:math';
-
+import 'package:allassabudget/utils.dart';
 import 'package:flutter/material.dart';
 
 class CategoryIcon extends StatelessWidget {
@@ -18,7 +17,7 @@ class CategoryIcon extends StatelessWidget {
           height: 50,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: Colors.primaries[Random(categoryName.hashCode).nextInt(Colors.primaries.length)]
+            color: associatedColor(categoryName)
           ),
         ),
         Text(categoryName)
