@@ -22,4 +22,15 @@ class Expense {
   final int amount;
 
   Expense({required this.timeStamp, required this.categories, required this.isRecurring, required this.amount});
+
+
+  @override
+  int get hashCode {
+    return id;
+  }
+
+  @override
+  bool operator ==(other) {
+    return other is Expense && id == other.id;
+  }
 }

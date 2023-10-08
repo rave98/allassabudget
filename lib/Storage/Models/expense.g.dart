@@ -27,13 +27,18 @@ const ExpenseSchema = CollectionSchema(
       name: r'categories',
       type: IsarType.stringList,
     ),
-    r'isRecurring': PropertySchema(
+    r'hashCode': PropertySchema(
       id: 2,
+      name: r'hashCode',
+      type: IsarType.long,
+    ),
+    r'isRecurring': PropertySchema(
+      id: 3,
       name: r'isRecurring',
       type: IsarType.bool,
     ),
     r'timeStamp': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'timeStamp',
       type: IsarType.dateTime,
     )
@@ -76,8 +81,9 @@ void _expenseSerialize(
 ) {
   writer.writeLong(offsets[0], object.amount);
   writer.writeStringList(offsets[1], object.categories);
-  writer.writeBool(offsets[2], object.isRecurring);
-  writer.writeDateTime(offsets[3], object.timeStamp);
+  writer.writeLong(offsets[2], object.hashCode);
+  writer.writeBool(offsets[3], object.isRecurring);
+  writer.writeDateTime(offsets[4], object.timeStamp);
 }
 
 Expense _expenseDeserialize(
@@ -89,8 +95,8 @@ Expense _expenseDeserialize(
   final object = Expense(
     amount: reader.readLong(offsets[0]),
     categories: reader.readStringList(offsets[1]) ?? [],
-    isRecurring: reader.readBool(offsets[2]),
-    timeStamp: reader.readDateTime(offsets[3]),
+    isRecurring: reader.readBool(offsets[3]),
+    timeStamp: reader.readDateTime(offsets[4]),
   );
   object.id = id;
   return object;
@@ -108,8 +114,10 @@ P _expenseDeserializeProp<P>(
     case 1:
       return (reader.readStringList(offset) ?? []) as P;
     case 2:
-      return (reader.readBool(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 3:
+      return (reader.readBool(offset)) as P;
+    case 4:
       return (reader.readDateTime(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -480,6 +488,59 @@ extension ExpenseQueryFilter
     });
   }
 
+  QueryBuilder<Expense, Expense, QAfterFilterCondition> hashCodeEqualTo(
+      int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'hashCode',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Expense, Expense, QAfterFilterCondition> hashCodeGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'hashCode',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Expense, Expense, QAfterFilterCondition> hashCodeLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'hashCode',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Expense, Expense, QAfterFilterCondition> hashCodeBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'hashCode',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
   QueryBuilder<Expense, Expense, QAfterFilterCondition> idEqualTo(Id value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -615,6 +676,18 @@ extension ExpenseQuerySortBy on QueryBuilder<Expense, Expense, QSortBy> {
     });
   }
 
+  QueryBuilder<Expense, Expense, QAfterSortBy> sortByHashCode() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hashCode', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Expense, Expense, QAfterSortBy> sortByHashCodeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hashCode', Sort.desc);
+    });
+  }
+
   QueryBuilder<Expense, Expense, QAfterSortBy> sortByIsRecurring() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isRecurring', Sort.asc);
@@ -651,6 +724,18 @@ extension ExpenseQuerySortThenBy
   QueryBuilder<Expense, Expense, QAfterSortBy> thenByAmountDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'amount', Sort.desc);
+    });
+  }
+
+  QueryBuilder<Expense, Expense, QAfterSortBy> thenByHashCode() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hashCode', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Expense, Expense, QAfterSortBy> thenByHashCodeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hashCode', Sort.desc);
     });
   }
 
@@ -705,6 +790,12 @@ extension ExpenseQueryWhereDistinct
     });
   }
 
+  QueryBuilder<Expense, Expense, QDistinct> distinctByHashCode() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'hashCode');
+    });
+  }
+
   QueryBuilder<Expense, Expense, QDistinct> distinctByIsRecurring() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'isRecurring');
@@ -735,6 +826,12 @@ extension ExpenseQueryProperty
   QueryBuilder<Expense, List<String>, QQueryOperations> categoriesProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'categories');
+    });
+  }
+
+  QueryBuilder<Expense, int, QQueryOperations> hashCodeProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'hashCode');
     });
   }
 

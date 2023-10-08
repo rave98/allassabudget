@@ -11,4 +11,14 @@ class Category {
   final String name;
 
   Category({required this.name});
+
+  @override
+  int get hashCode {
+    return id;
+  }
+
+  @override
+  bool operator ==(other) {
+    return other is Category && id == other.id;
+  }
 }
