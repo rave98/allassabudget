@@ -4,6 +4,10 @@ import 'package:allassabudget/logger.dart';
 class CategoiesSelectingController {
   List<Category> categoriesList = [];
 
+  void clear() {
+    categoriesList = [];
+  }
+
   void toggleCategory(Category category) {
     if(categoriesList.contains(category)) {
       logger.info("Removing category ${category.name}");
