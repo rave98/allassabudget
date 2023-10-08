@@ -23,4 +23,17 @@ class Storage {
   static Future<void> addExpense(Expense expense) async {
     await localStorage!.writeTxn(() async => localStorage!.expenses.put(expense));
   }
+  
+  /// performs a select sum(price) from expenses group by category
+  /// returns a map that associates each category to the total expenses for that category
+  static Future<Map<String, double>> categoryGroupedExpenses() async {
+    List<Expense> expenses  = await localStorage!.expenses.where().findAll();
+    Map<String, double> groupedExpenses = {};
+    for (var e in expenses) {
+      for (var c in e.categories) {
+        groupedExpenses.update(c, (value) => value += e.amount / 100, ifAbsent: () => e.amount / 100);
+      }
+    }
+    return groupedExpenses;
+  }
 }

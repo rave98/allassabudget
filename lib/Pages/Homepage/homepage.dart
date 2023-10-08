@@ -1,4 +1,6 @@
+import 'package:allassabudget/Storage/Models/expense.dart';
 import 'package:allassabudget/logger.dart';
+import 'package:allassabudget/Storage/storage.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pie_chart/pie_chart.dart';
@@ -25,7 +27,6 @@ class HomePage extends StatelessWidget {
       // path + filename
       (await getApplicationDocumentsDirectory()).path + DateTime.now().millisecondsSinceEpoch.toString()
     );
-    
   }
 
   @override
@@ -43,17 +44,26 @@ class HomePage extends StatelessWidget {
              Text("Uscite!!", style: Theme.of(context).textTheme.displayMedium?.copyWith(color: Colors.red),)
           ],
         ),
-        PieChart(
-          colorList: [
-            Theme.of(context).primaryColor,
-            Theme.of(context).primaryColorDark,
-            Theme.of(context).primaryColorLight
-          ],
-          dataMap: {
-            "Spesa": 100,
-            "Recurring": 200,
-            "Birrette": 260
-          })
+        FutureBuilder(
+          future: Storage.categoryGroupedExpenses(), 
+          builder: (BuildContext context, AsyncSnapshot<Map<String, double>> snapshot) {
+            if (snapshot.hasData && snapshot.data != null && snapshot.data!.isNotEmpty) {
+              return PieChart(
+                colorList: [
+                  Theme.of(context).primaryColor,
+                  Theme.of(context).primaryColorDark,
+                  Theme.of(context).primaryColorLight
+                ],
+                dataMap: snapshot.data!
+              );
+            } else if (snapshot.hasData && snapshot.data != null && snapshot.data!.isEmpty) {
+              return const Center(child: Text("No expenses added yet!"),);
+            } else if (snapshot.hasError) {
+              return const Center(child: Text("We had a problem retrieving your expenses"),);
+            } else {
+              return const CircularProgressIndicator();
+            }
+        },)
       ],
     );
   }
