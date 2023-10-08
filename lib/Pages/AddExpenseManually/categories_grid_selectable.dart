@@ -54,9 +54,8 @@ class _CategoriesGridSelectableState extends State<CategoriesGridSelectable> {
                 InkWell(
                   child: createCategoryIcon(category.name),
                   onTap: () {
-                    logger.info("Selecting ${category.name}");
                     setState(() {
-                      widget.controller.addCategory(category);
+                      widget.controller.toggleCategory(category);
                     });
                   },
                 )).toList(),) :
