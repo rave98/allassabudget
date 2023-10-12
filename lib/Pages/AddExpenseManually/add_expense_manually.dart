@@ -31,13 +31,14 @@ class _AddExpenseManuallyState extends State<AddExpenseManually> {
         actions: [
           TextButton(onPressed: () => Navigator.of(context).pop(), child: Text("Cancel")),
           ElevatedButton(
-            onPressed: () async {
-              await Storage.addExpense(Expense(
+            onPressed: () {
+              Storage.addExpense(Expense(
                 timeStamp: DateTime.now(), 
                 categories: categoriesController.categoriesList.map((c) => c.name).toList(), 
                 isRecurring: false, 
                 amount: int.parse(valueController.text) * 100)
               );
+              Navigator.of(context).pop();
             }, 
             child: Text("Confirm")
           )
@@ -49,11 +50,12 @@ class _AddExpenseManuallyState extends State<AddExpenseManually> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         DropdownMenu(
           controller: inOutController,
+          initialSelection: "In",
           dropdownMenuEntries: [
             DropdownMenuEntry(label: "In", value: "In"),
             DropdownMenuEntry(label: "Out", value: "Out")
@@ -65,14 +67,15 @@ class _AddExpenseManuallyState extends State<AddExpenseManually> {
           controller: valueController,
           decoration: InputDecoration(
             suffixIcon: Container(
-              margin: EdgeInsets.all(8),
+              margin: const EdgeInsets.all(8),
               child: IconButton(
-                icon: Icon(Icons.check),
+                icon: const Icon(Icons.check),
                 onPressed: confirmAddExpense,
               ),
             ),
           ),
-        )
+        ),
+        ElevatedButton(onPressed: confirmAddExpense, child: Text("Add"))
       ],
     );
   }
