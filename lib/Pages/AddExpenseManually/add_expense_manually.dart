@@ -16,6 +16,8 @@ class _AddExpenseManuallyState extends State<AddExpenseManually> {
   final TextEditingController inOutController = TextEditingController();
   final TextEditingController valueController = TextEditingController();
   final CategoiesSelectingController categoriesController = CategoiesSelectingController();
+  bool isRecurring = false;
+  List<int> recurringSpecs = [0, 0];
 
   void confirmAddExpense() {
     showDialog(context: context, builder: (context) {
@@ -35,7 +37,9 @@ class _AddExpenseManuallyState extends State<AddExpenseManually> {
               Storage.addExpense(Expense(
                 timeStamp: DateTime.now(), 
                 categories: categoriesController.categoriesList.map((c) => c.name).toList(), 
-                isRecurring: false, 
+                isRecurring: false,
+                recurringInterval: recurringSpecs[0],
+                recurringSpan: recurringSpecs[1],
                 amount: int.parse(valueController.text) * 100)
               );
               Navigator.of(context).pop();
@@ -56,7 +60,7 @@ class _AddExpenseManuallyState extends State<AddExpenseManually> {
         DropdownMenu(
           controller: inOutController,
           initialSelection: "In",
-          dropdownMenuEntries: [
+          dropdownMenuEntries: const [
             DropdownMenuEntry(label: "In", value: "In"),
             DropdownMenuEntry(label: "Out", value: "Out")
           ]
@@ -75,7 +79,21 @@ class _AddExpenseManuallyState extends State<AddExpenseManually> {
             ),
           ),
         ),
-        ElevatedButton(onPressed: confirmAddExpense, child: Text("Add"))
+        Row(
+          children: [
+            Text("Is this expense recurring?"),
+            Checkbox(
+              value: isRecurring, 
+              onChanged: (value) => isRecurring = value ?? false)
+          ]
+        ),
+        if (isRecurring)
+          Row(
+            children: [
+              // TODO: add wheel choosers for recurringSpan and recurringInterval
+            ],
+          )
+        ElevatedButton(onPressed: confirmAddExpense, child: const Text("Add"))
       ],
     );
   }

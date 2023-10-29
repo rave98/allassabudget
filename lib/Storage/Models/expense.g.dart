@@ -37,8 +37,18 @@ const ExpenseSchema = CollectionSchema(
       name: r'isRecurring',
       type: IsarType.bool,
     ),
-    r'timeStamp': PropertySchema(
+    r'recurringInterval': PropertySchema(
       id: 4,
+      name: r'recurringInterval',
+      type: IsarType.long,
+    ),
+    r'recurringSpan': PropertySchema(
+      id: 5,
+      name: r'recurringSpan',
+      type: IsarType.long,
+    ),
+    r'timeStamp': PropertySchema(
+      id: 6,
       name: r'timeStamp',
       type: IsarType.dateTime,
     )
@@ -83,7 +93,9 @@ void _expenseSerialize(
   writer.writeStringList(offsets[1], object.categories);
   writer.writeLong(offsets[2], object.hashCode);
   writer.writeBool(offsets[3], object.isRecurring);
-  writer.writeDateTime(offsets[4], object.timeStamp);
+  writer.writeLong(offsets[4], object.recurringInterval);
+  writer.writeLong(offsets[5], object.recurringSpan);
+  writer.writeDateTime(offsets[6], object.timeStamp);
 }
 
 Expense _expenseDeserialize(
@@ -96,7 +108,9 @@ Expense _expenseDeserialize(
     amount: reader.readLong(offsets[0]),
     categories: reader.readStringList(offsets[1]) ?? [],
     isRecurring: reader.readBool(offsets[3]),
-    timeStamp: reader.readDateTime(offsets[4]),
+    recurringInterval: reader.readLong(offsets[4]),
+    recurringSpan: reader.readLong(offsets[5]),
+    timeStamp: reader.readDateTime(offsets[6]),
   );
   object.id = id;
   return object;
@@ -118,6 +132,10 @@ P _expenseDeserializeProp<P>(
     case 3:
       return (reader.readBool(offset)) as P;
     case 4:
+      return (reader.readLong(offset)) as P;
+    case 5:
+      return (reader.readLong(offset)) as P;
+    case 6:
       return (reader.readDateTime(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -603,6 +621,116 @@ extension ExpenseQueryFilter
     });
   }
 
+  QueryBuilder<Expense, Expense, QAfterFilterCondition>
+      recurringIntervalEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'recurringInterval',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Expense, Expense, QAfterFilterCondition>
+      recurringIntervalGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'recurringInterval',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Expense, Expense, QAfterFilterCondition>
+      recurringIntervalLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'recurringInterval',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Expense, Expense, QAfterFilterCondition>
+      recurringIntervalBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'recurringInterval',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<Expense, Expense, QAfterFilterCondition> recurringSpanEqualTo(
+      int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'recurringSpan',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Expense, Expense, QAfterFilterCondition>
+      recurringSpanGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'recurringSpan',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Expense, Expense, QAfterFilterCondition> recurringSpanLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'recurringSpan',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Expense, Expense, QAfterFilterCondition> recurringSpanBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'recurringSpan',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
   QueryBuilder<Expense, Expense, QAfterFilterCondition> timeStampEqualTo(
       DateTime value) {
     return QueryBuilder.apply(this, (query) {
@@ -700,6 +828,30 @@ extension ExpenseQuerySortBy on QueryBuilder<Expense, Expense, QSortBy> {
     });
   }
 
+  QueryBuilder<Expense, Expense, QAfterSortBy> sortByRecurringInterval() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'recurringInterval', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Expense, Expense, QAfterSortBy> sortByRecurringIntervalDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'recurringInterval', Sort.desc);
+    });
+  }
+
+  QueryBuilder<Expense, Expense, QAfterSortBy> sortByRecurringSpan() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'recurringSpan', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Expense, Expense, QAfterSortBy> sortByRecurringSpanDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'recurringSpan', Sort.desc);
+    });
+  }
+
   QueryBuilder<Expense, Expense, QAfterSortBy> sortByTimeStamp() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'timeStamp', Sort.asc);
@@ -763,6 +915,30 @@ extension ExpenseQuerySortThenBy
     });
   }
 
+  QueryBuilder<Expense, Expense, QAfterSortBy> thenByRecurringInterval() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'recurringInterval', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Expense, Expense, QAfterSortBy> thenByRecurringIntervalDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'recurringInterval', Sort.desc);
+    });
+  }
+
+  QueryBuilder<Expense, Expense, QAfterSortBy> thenByRecurringSpan() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'recurringSpan', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Expense, Expense, QAfterSortBy> thenByRecurringSpanDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'recurringSpan', Sort.desc);
+    });
+  }
+
   QueryBuilder<Expense, Expense, QAfterSortBy> thenByTimeStamp() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'timeStamp', Sort.asc);
@@ -802,6 +978,18 @@ extension ExpenseQueryWhereDistinct
     });
   }
 
+  QueryBuilder<Expense, Expense, QDistinct> distinctByRecurringInterval() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'recurringInterval');
+    });
+  }
+
+  QueryBuilder<Expense, Expense, QDistinct> distinctByRecurringSpan() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'recurringSpan');
+    });
+  }
+
   QueryBuilder<Expense, Expense, QDistinct> distinctByTimeStamp() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'timeStamp');
@@ -838,6 +1026,18 @@ extension ExpenseQueryProperty
   QueryBuilder<Expense, bool, QQueryOperations> isRecurringProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'isRecurring');
+    });
+  }
+
+  QueryBuilder<Expense, int, QQueryOperations> recurringIntervalProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'recurringInterval');
+    });
+  }
+
+  QueryBuilder<Expense, int, QQueryOperations> recurringSpanProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'recurringSpan');
     });
   }
 
