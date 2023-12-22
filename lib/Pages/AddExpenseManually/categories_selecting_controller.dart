@@ -1,7 +1,7 @@
 import 'package:allassabudget/Storage/Models/category.dart';
 import 'package:allassabudget/logger.dart';
 /// Controller for the custom [categories_list_selectable] widget
-class CategoiesSelectingController {
+class CategoriesSelectingController {
   List<Category> categoriesList = [];
 
   void clear() {

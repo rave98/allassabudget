@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
 
 class CategoriesGridSelectable extends StatefulWidget {
-  CategoiesSelectingController controller;
+  CategoriesSelectingController controller;
   
   CategoriesGridSelectable(this.controller, {super.key});
 
