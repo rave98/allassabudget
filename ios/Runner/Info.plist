@@ -51,5 +51,10 @@
   <string>We need camera access to acquire images.</string>
   <key>NSMicrophoneUsageDescription</key>
   <string>We need microphone access to successfully use you camera. We will not register audio.</string>
+  <key>Localizations</key>
+  <array>
+    <string>en</string>
+    <string>it</string>
+  </array>
 </dict>
 </plist>

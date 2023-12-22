@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:allassabudget/Storage/storage.dart';
 import 'package:allassabudget/Pages/AddExpenseManually/add_expense_manually.dart';
@@ -27,6 +28,8 @@ class MyApp extends StatelessWidget {
       title: 'AAA Budget',
       theme: appTheme,
       home: const MyHomePage(title: 'AAA Budget'),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
     );
   }
 }

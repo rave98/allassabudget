@@ -1,0 +1,12 @@
+{
+  "helloWorld": "First landing!",
+  "confirm": "Confirm",
+  "cancel": "Cancel",
+  "recurringExpense": "Is this expense recurring?",
+  "every": "Every",
+  "days": "Days",
+  "weeks": "Weeks",
+  "months": "Months",
+  "years": "Years",
+  "addExpense": "Add"
+}

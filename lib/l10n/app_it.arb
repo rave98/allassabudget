@@ -1,0 +1,12 @@
+{
+  "helloWorld": "Primo contatto!",
+  "confirm": "Conferma",
+  "cancel": "Annulla",
+  "recurringExpense": "Si ripete?",
+  "every": "Ogni",
+  "days": "Giorni",
+  "weeks": "Settimane",
+  "months": "Mesi",
+  "years": "Anni",
+  "addExpense": "Aggiungi"
+}
