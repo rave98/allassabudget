@@ -26,6 +26,8 @@ class Expense {
   /// 1 days
   /// 2 weeks
   /// 3 months
+  /// 4 years
+  /// There's an Enum that catches this relationship in {@link lib/utils.dart}
   final int recurringSpan;
 
   /// amount in cents

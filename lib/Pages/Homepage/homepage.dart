@@ -40,8 +40,26 @@ class HomePage extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-             Text("Entrate!!", style: Theme.of(context).textTheme.displayMedium?.copyWith(color: Colors.green),),
-             Text("Uscite!!", style: Theme.of(context).textTheme.displayMedium?.copyWith(color: Colors.red),)
+             FutureBuilder(
+              future: Storage.gains(),
+              builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+                if (snapshot.hasData && snapshot.data != null) {
+                  return Text(snapshot.data.toString(), style: Theme.of(context).textTheme.displayMedium?.copyWith(color: Colors.green),);
+                }
+                else {
+                  return const CircularProgressIndicator();
+                }
+              }),
+            FutureBuilder(
+              future: Storage.losses(),
+              builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+                if (snapshot.hasData && snapshot.data != null) {
+                  return Text(snapshot.data.toString(), style: Theme.of(context).textTheme.displayMedium?.copyWith(color: Colors.red),);
+                }
+                else {
+                  return const CircularProgressIndicator();
+                }
+              }),
           ],
         ),
         FutureBuilder(
