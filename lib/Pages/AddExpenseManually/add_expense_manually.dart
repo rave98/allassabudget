@@ -24,7 +24,9 @@ class _AddExpenseManuallyState extends State<AddExpenseManually> {
   List<int> recurringSpecs = [0, 0];
 
   void confirmAddExpense() {
-    setState(() => recurringSpecs[0] = int.parse(recurrenceController.text));
+    if (recurrenceController.text.isNotEmpty) {
+      setState(() => recurringSpecs[0] = int.parse(recurrenceController.text));
+    } 
     showDialog(context: context, builder: (context) {
       return AlertDialog(
         title: Text("${inOutController.text == "In" ? "+" : "-"}${valueController.text}"),
