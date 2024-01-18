@@ -7,8 +7,15 @@ class BudgetCap extends StatelessWidget {
   BudgetCap({super.key});
   final CategoriesSelectingController categoriesController = CategoriesSelectingController();
 
-  void confirmCapCategories() {
-    
+  void confirmCapCategories(BuildContext context) {
+    if (categoriesController.categoriesList.isEmpty) {
+      return;
+    }
+    showDialog(context: context, builder: (context) {
+      return AlertDialog(
+        title: Text(),
+      );
+    });
   }
 
   @override
@@ -16,7 +23,7 @@ class BudgetCap extends StatelessWidget {
     return Column(
       children: [
         CategoriesGridSelectable(categoriesController),
-        ElevatedButton(onPressed: confirmCapCategories, child: Text(AppLocalizations.of(context)!.addExpense))
+        ElevatedButton(onPressed: () => confirmCapCategories(context), child: Text(AppLocalizations.of(context)!.addExpense))
       ]);
   }
 }

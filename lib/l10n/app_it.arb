@@ -8,5 +8,6 @@
   "weeks": "Settimane",
   "months": "Mesi",
   "years": "Anni",
-  "addExpense": "Aggiungi"
+  "addExpense": "Aggiungi",
+  "confirmCapCategories": "Aggiungi tetto a queste categorie"
 }

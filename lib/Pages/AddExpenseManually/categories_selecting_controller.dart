@@ -26,8 +26,4 @@ class CategoriesSelectingController {
   void removeCategory(Category category) {
     categoriesList.remove(category);
   }
-
-  List<Category> getSelectedCategories() {
-    return categoriesList;
-  }
 }

@@ -8,5 +8,6 @@
   "weeks": "Weeks",
   "months": "Months",
   "years": "Years",
-  "addExpense": "Add"
+  "addExpense": "Add",
+  "confirmCapCategories": "Confirm cap categories"
 }
