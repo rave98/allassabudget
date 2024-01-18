@@ -1,4 +1,5 @@
 import 'package:allassabudget/Storage/Models/expense.dart';
+import 'package:allassabudget/TextRecognition/text_detector_view.dart';
 import 'package:allassabudget/logger.dart';
 import 'package:allassabudget/Storage/storage.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ class HomePage extends StatelessWidget {
 
   void pickImage() async {
     logger.info("Opening camera");
+    
     XFile? newImage = await _imagePicker.pickImage(source: ImageSource.camera);
 
     if(newImage == null) {
@@ -35,7 +37,7 @@ class HomePage extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         MaterialButton(
-          onPressed: pickImage, 
+          onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => new TextRecognizerView())), 
           child: Icon(Icons.add_circle, color: Theme.of(context).primaryColor, size: 300,),),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
