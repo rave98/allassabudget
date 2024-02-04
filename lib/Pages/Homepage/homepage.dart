@@ -9,27 +9,7 @@ import 'package:image_picker/image_picker.dart';
 
 /// HomePage of the application, displaying basic information
 class HomePage extends StatelessWidget {
-  late ImagePicker _imagePicker;
-
-  HomePage({super.key}) {
-    _imagePicker = ImagePicker();
-  }
-
-  void pickImage() async {
-    logger.info("Opening camera");
-    
-    XFile? newImage = await _imagePicker.pickImage(source: ImageSource.camera);
-
-    if(newImage == null) {
-      return; // TODO: add snackbar / toast message for user, 'Failed retrieving image'
-    }
-    
-    logger.info("Saving image");
-    newImage.saveTo(
-      // path + filename
-      (await getApplicationDocumentsDirectory()).path + DateTime.now().millisecondsSinceEpoch.toString()
-    );
-  }
+  HomePage({super.key}) ;
 
   @override
   Widget build(BuildContext context) {
