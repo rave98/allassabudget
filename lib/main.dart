@@ -13,7 +13,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
   setupLogger();
-  Storage.setupLocalStorage();
+  await Storage.setupLocalStorage();
   
   runApp(const MyApp());
 }

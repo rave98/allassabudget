@@ -7,7 +7,7 @@ import 'package:allassabudget/Storage/Models/expense.dart';
 class Storage {
   static Isar? localStorage;
 
-  static void setupLocalStorage() async {
+  static setupLocalStorage() async {
     logger.info('Connecting to Isar');
     final dir = await getApplicationDocumentsDirectory();
     localStorage = await Isar.open(
