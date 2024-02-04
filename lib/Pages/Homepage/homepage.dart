@@ -17,7 +17,10 @@ class HomePage extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         MaterialButton(
-          onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => new TextRecognizerView())), 
+          onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) {
+            logger.info("Opening camera");
+            return TextRecognizerView();
+          })), 
           child: Icon(Icons.add_circle, color: Theme.of(context).primaryColor, size: 300,),),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -26,7 +29,7 @@ class HomePage extends StatelessWidget {
               future: Storage.gains(),
               builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
                 if (snapshot.hasData && snapshot.data != null) {
-                  return Text(snapshot.data.toString(), style: Theme.of(context).textTheme.displayMedium?.copyWith(color: Colors.green),);
+                  return Text((snapshot.data! / 100).toString(), style: Theme.of(context).textTheme.displayMedium?.copyWith(color: Colors.green),);
                 }
                 else {
                   return const CircularProgressIndicator();
@@ -36,7 +39,7 @@ class HomePage extends StatelessWidget {
               future: Storage.losses(),
               builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
                 if (snapshot.hasData && snapshot.data != null) {
-                  return Text(snapshot.data.toString(), style: Theme.of(context).textTheme.displayMedium?.copyWith(color: Colors.red),);
+                  return Text((snapshot.data! / 100).toString(), style: Theme.of(context).textTheme.displayMedium?.copyWith(color: Colors.red),);
                 }
                 else {
                   return const CircularProgressIndicator();

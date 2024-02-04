@@ -9,8 +9,11 @@ class Category {
 
   /// the category name
   final String name;
+  
+  /// budget cap for the category. Zero means no cap
+  int cap;
 
-  Category({required this.name});
+  Category({required this.name, this.cap = 0});
 
   @override
   int get hashCode {
